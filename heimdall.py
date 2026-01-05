@@ -10,7 +10,7 @@ load_dotenv()
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
-model = "claude-3-haiku-20240307"
+model = os.getenv("MODEL")
 max_tokens = 512
 temperature = 0.7
 
@@ -30,7 +30,7 @@ async def ask_claude(question: str) -> str:
         model=model,
         max_tokens=max_tokens,
         temperature=temperature,
-        system="You are Claude, a helpful assistant.",
+        system="You are Heimdall, a helpful assistant.",
         messages=[{"role": "user", "content": question}]
     )
     return response.content[0].text
