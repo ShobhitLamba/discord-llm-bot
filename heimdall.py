@@ -30,7 +30,7 @@ async def ask_claude(question: str) -> str:
         model=model,
         max_tokens=max_tokens,
         temperature=temperature,
-        system="You are Heimdall, a helpful assistant.",
+        system="You are Heimdall, a helpful assistant. And a Norse god.",
         messages=[{"role": "user", "content": question}]
     )
     return response.content[0].text
@@ -40,8 +40,9 @@ async def ask_claude(question: str) -> str:
     question="The question you want to ask Claude"
 )
 async def ask(interaction: discord.Interaction, question: str):
+    await interaction.response.defer()
     answer = await ask_claude(question)
-    await interaction.response.send_message(answer)
+    await interaction.followup.send(answer)
 
 @bot.event
 async def on_message(message):
@@ -50,8 +51,9 @@ async def on_message(message):
     if bot.user in message.mentions:
         question = message.content.replace(f'<@{bot.user.id}>', '').strip()
         if question:
+            processing_msg = await message.reply("Processing...", mention_author=False)
             answer = await ask_claude(question)
-            await message.reply(answer, mention_author=False)
+            await processing_msg.edit(content=answer)
     await bot.process_commands(message)
 
 if __name__ == "__main__":
