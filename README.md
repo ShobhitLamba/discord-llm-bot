@@ -61,5 +61,8 @@ Ensure the bot has the following Discord permissions:
 - `DISCORD_BOT_TOKEN`: Your Discord bot token
 - `ANTHROPIC_API_KEY`: Your Anthropic Claude API key
 
+## Contributing
+- New ideas are always welcome! Please raise a PR in case you want to help with the project.
+
 ## License
 MIT
